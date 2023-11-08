@@ -8,11 +8,11 @@
     "sequelize": "^6.33.0"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "name": "prueba_nodejs",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "index.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
