@@ -1,10 +1,12 @@
-const express = require("express");
-const cors = require("cors");
-require('dotenv').config();
+import express from 'express';
+import cors from 'cors';
+import { config } from 'dotenv';
+
+config();
 
 const app = express();
 
-var corsOptions = {
+const corsOptions = {
   origin: "http://localhost:8081"
 };
 
@@ -14,26 +16,22 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-const db = require("./app/models");
-db.sequelize.sync().then(() => {
-    console.log("Sincronizacion exitosa.");
-  }).catch((err) => {
-    console.log("Sincronizacion fallida db: " + err.message);
-  });
+import * as db from './app/models';
 
-// // drop the table if it already exists
-// db.sequelize.sync({ force: true }).then(() => {
-//   console.log("Drop and re-sync db.");
-// });
+db.sequelize.sync().then(() => {
+  console.log("Sincronizacion exitosa.");
+}).catch((err) => {
+  console.log("Sincronizacion fallida db: " + err.message);
+});
 
 app.get("/", (req, res) => {
   res.json({ message: "Bienvenido Estudiantes de UMG" });
 });
 
 //Referencia a Rutas
-require("./app/routes/cliente.routes")(app);
+import clienteRoutes from './app/routes/cliente.routes';
 
-
+clienteRoutes(app);
 
 const PORT = process.env.PORT_SERVER;
 app.listen(PORT, () => {
